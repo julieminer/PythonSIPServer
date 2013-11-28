@@ -1,25 +1,25 @@
-def processError(msg, sock, addr):
+def processError(msg, utils):
 	print "Processing Error"
 
-def processAck(msg, sock, addr):
+def processAck(msg, utils):
 	print "Processing ACK"
 
-def processRegister(msg, sock, addr):
+def processRegister(msg, utils):
 	print "Processing REGISTER"
 
-def processInfo(msg, sock, addr):
+def processInfo(msg, utils):
 	print "Processing INFO"
 
-def processInvite(msg, sock, addr):
+def processInvite(msg, utils):
 	print "Processing INVITE"
-	var.send_100_trying(msg)
 
-def processOptions(msg, sock, addr):
+def processOptions(msg, utils):
 	print "Processing OPTION"
 
-def processCancel(msg, sock, addr):
+def processCancel(msg, utils):
 	print "Processing CANCEL"
 
-def processBye(msg, sock, addr):
+def processBye(msg, utils):
 	print "Processing BYE"
+	
 	
