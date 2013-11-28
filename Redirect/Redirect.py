@@ -1,4 +1,6 @@
 import socket
+import Messages
+import checkMessage
 
 listenSocket = socket.socket() #TCP is the default
 host = ''    #Refers to local Machine
