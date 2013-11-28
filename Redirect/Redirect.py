@@ -1,16 +1,16 @@
 import socket
 
-listenPort = 3000
-sendPort   = 5060
-UDP_IP     = "127.0.0.1"
+listenSocket = socket.socket() #TCP is the default
+host = ''    #Refers to local Machine
+port = 3000
 
-listenSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-listenSocket.bind((UDP_IP, listenPort))
+listenSocket.bind((host, port))
 
-sendSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+listenSocket.listen(5)
 while True:
+	client, address = listenSocket.accept()
+
 	message, addr = listenSocket.recvfrom(1024)
 	sendMessage = CheckMessage.check(message)
-	sendSocket.sendto(sendMessage, (UDP_IP, sendPort))
+	client.send(sendMessage)
 
