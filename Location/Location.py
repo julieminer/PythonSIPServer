@@ -31,6 +31,7 @@ class location:
 
 
 def parsePacket(data):
+    print (data)
     type, sipId, ip = data.split()
     #arr = data.split('\r\n')
     
@@ -70,11 +71,11 @@ class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 
 if __name__ == "__main__":
     # Port 0 means to select an arbitrary unused port
-    HOST, PORT = "localhost", 5062
+    HOST, PORT = "", 5062
 
     server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
     ip, port = server.server_address
-
+    print ip
     # Start a thread with the server -- that thread will then start one
     # more thread for each request
     server_thread = threading.Thread(target=server.serve_forever)
