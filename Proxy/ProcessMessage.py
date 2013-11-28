@@ -1,21 +1,25 @@
 def processError(msg, utils):
 	print "Processing Error"
+	# ignore errors
 
 def processAck(msg, utils):
 	print "Processing ACK"
 
 def processRegister(msg, utils):
 	print "Processing REGISTER"
+	# send to Registrar
 
 def processInfo(msg, utils):
 	print "Processing INFO"
 
 def processInvite(msg, utils):
 	print "Processing INVITE"
+	# send trying
+	# forward to client
 
 def processOptions(msg, utils):
 	print "Processing OPTION"
-
+	
 def processCancel(msg, utils):
 	print "Processing CANCEL"
 
