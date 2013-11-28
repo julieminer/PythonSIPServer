@@ -1,32 +1,34 @@
-def processError(msg, utils):
+def processError(msg, utils, socks):
 	print "Processing Error"
 	# ignore errors
 
-def processAck(msg, utils):
+def processAck(msg, utils, socks):
 	print "Processing ACK"
 
-def processRegister(msg, utils):
+def processRegister(msg, utils, socks):
 	print "Processing REGISTER"
-	# forwardToRegistrar(msg)
+	#forwardToRegistrar(msg)
+	socks[0].send(msg)
 
-def processInfo(msg, utils):
+def processInfo(msg, utils, socks):
 	print "Processing INFO"
 
-def processInvite(msg, utils):
+def processInvite(msg, utils, socks):
 	print "Processing INVITE"
+	socks[0].send(msg)
 	# send trying to client
 	# LOOKUP username
 	# send to address
 
-def processOptions(msg, utils):
+def processOptions(msg, utils, socks):
 	print "Processing OPTION"
 	# don't do this
 	
-def processCancel(msg, utils):
+def processCancel(msg, utils, socks):
 	print "Processing CANCEL"
 	# this sucks, ignore it
 
-def processBye(msg, utils):
+def processBye(msg, utils, socks):
 	print "Processing BYE"
 	# send bye to whoever
 	
