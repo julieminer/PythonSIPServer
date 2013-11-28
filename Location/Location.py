@@ -7,11 +7,11 @@ class User:
     def __init__(self, sipId, ip):
         self.sipId = sipId
         self.ip = ip
-    def getSipId():
+    def getSipId(self):
         return self.sipId
-    def getIp ():
+    def getIp (self):
         return self.ip
-    def update( ip):
+    def update(self, ip):
         self.ip = ip
 def Singleton(cls):
     return cls()
@@ -19,29 +19,35 @@ def Singleton(cls):
 
 @Singleton
 class location:
-        
-    def __init__(self):
-        print 'Foo created'
+
     users={}
     def save(self, sipId, ip):
         self.users[sipId]  = User(sipId, ip)
+        print ('ok')
         return "ok"
     def fetch(self, sipId):
-        self.users[sipId].getIp()
-        return "ok"
+        return self.users[sipId].getIp()
+        
 
 
 def parsePacket(data):
     type, sipId, ip = data.split()
+    #arr = data.split('\r\n')
+    
+    #type = arr[0].split()[0]
+    #sipId = arr[7].split()[1].split(":")[1].split("@")[0]
+    #ip =arr[7].split()[1].split("@")[1].split(":")[0]
     print (type)
     print (sipId)
     print (ip)
     rtn = ""
     loc = location
-    print loc
-    if ( type == 'register' ):
+   
+    if ( type == 'REGISTER' ):
+        print ("registering")
         rtn = loc.save( sipId, ip)
-    if (type == 'lookup'):
+    if (type == 'LOOKUP'):
+        print ("lookingup")
         rtn = loc.fetch(  sipId) #returns ip address
     return rtn
 
@@ -58,7 +64,8 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         #response = "{}: {}".format(cur_thread.name, data)
 
 
-        self.request.sendall(response)
+        self.request.send(response)
+        server.shutdown()
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     pass
@@ -75,7 +82,7 @@ def client(ip, port, message):
 
 if __name__ == "__main__":
     # Port 0 means to select an arbitrary unused port
-    HOST, PORT = "localhost", 9050
+    HOST, PORT = "localhost", 5061
 
     server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
     ip, port = server.server_address
@@ -88,10 +95,13 @@ if __name__ == "__main__":
     server_thread.start()
     print ("Server loop running in thread:", server_thread.name)
 
-    client(ip, port, "register 1 1")
-    client(ip, port, "register 2 2")
-    client(ip, port, "register 3 3")
-
-    server.shutdown()
 
 
+#   client(ip, port, "register 1 1")
+#    client(ip, port, "register 2 2")
+#    client(ip, port, "register 3 3")
+#    client(ip, port, "lookup 2 2")
+#    server.shutdown()
+
+while True:
+    pass
