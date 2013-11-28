@@ -1,5 +1,7 @@
 import socket
 import CheckMessage
+import imp
+modl = imp.load_source('Utility', 'C:/Users/a00815466/Documents/GitHub/PythonSIPServer/Utilities/Utility.py')
 
 listenPort 		= 5060
 sendPort		= 3001
