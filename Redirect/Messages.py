@@ -20,7 +20,16 @@ def REJECTED(): #404
 # Reply with this when there is one or more servers to redirect to
 # The Contact fields of the message should contain a list of these servers
 def MULTIPLE_CHOICES(): #300
-	msg = "SIP/2.0 300 MULTIPLE CHOICES"
+	msg = "SIP/2.0 300 MULTIPLE CHOICES\n"
+	try:
+		f1 = open("redirect_list", 'r')
+		line = f1.read(1024)
+		while line != "":
+			msg += "Content: " + line
+			line = f1.read(1024)
+		f1.close()
+	except:
+		print "ERROR: File specified does not exist"
 	return msg
 
 # This tells the user that the address it is using is no longer valid and that it should update it locally
