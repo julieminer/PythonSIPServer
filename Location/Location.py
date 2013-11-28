@@ -60,29 +60,17 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         
         response = parsePacket( data )
 
-        #cur_thread = threading.current_thread()
-        #response = "{}: {}".format(cur_thread.name, data)
-
-
         self.request.send(response)
-        server.shutdown()
+        
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     pass
 
-def client(ip, port, message):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((ip, port))
-    try:
-        sock.sendall(message)
-        response = sock.recv(1024)
-        print ("Received: {}".format(response))
-    finally:
-        sock.close()
+
 
 if __name__ == "__main__":
     # Port 0 means to select an arbitrary unused port
-    HOST, PORT = "localhost", 5061
+    HOST, PORT = "localhost", 5062
 
     server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
     ip, port = server.server_address
@@ -96,12 +84,6 @@ if __name__ == "__main__":
     print ("Server loop running in thread:", server_thread.name)
 
 
-
-#   client(ip, port, "register 1 1")
-#    client(ip, port, "register 2 2")
-#    client(ip, port, "register 3 3")
-#    client(ip, port, "lookup 2 2")
-#    server.shutdown()
 
 while True:
     pass
