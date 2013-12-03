@@ -3,7 +3,7 @@ from Proxy import Proxy
 from Utilities import Utility
 import Registrar
 
-regAddress = "142.232.237.141"
+regAddress = "localhost"
 redAddress = "localhost" 
 locAddress = "localhost"
 

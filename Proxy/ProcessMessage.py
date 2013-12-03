@@ -16,6 +16,9 @@ def processInfo(msg, utils, socks):
 def processInvite(msg, utils, socks):
 	print "Processing INVITE"
 	socks[0].send(msg)
+	sendTrying(msg)
+	if((user = lookupUser(msg)) != "NO USER"):
+		sendInvite(user)
 	# send trying to client
 	# LOOKUP username
 	# send to address
@@ -32,4 +35,26 @@ def processBye(msg, utils, socks):
 	print "Processing BYE"
 	# send bye to whoever
 	
-	
+def sendTrying(msg):
+	#get the address from the msg
+	#send TRYING message to address
+
+def sendInvite(user):
+	#send invite to users address
+
+def lookupUser(msg):
+	#send message to location server
+	name = getName(msg)
+	socks[2].send("LOOKUP " + name)
+	address = socks[2].recv(1024)
+	#wait for response to come back
+	#if no user exists, return NO USER
+	if(address == ""):
+		return "NO USER"
+	return address
+
+def getName(msg):
+	nameStart 	= msg.find("To: ")
+	nameEnd 	= msg.find("From: ")
+	nameSize	= nameEnd - nameStart
+	return msg.read(nameSize, nameStart)
