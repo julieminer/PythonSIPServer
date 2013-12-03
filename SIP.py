@@ -1,7 +1,7 @@
 import socket
 from Proxy import Proxy 
 from Utilities import Utility
-from Registrar import RegistrarV2
+from Registrar import Registrar
 
 regAddress = "localhost"
 redAddress = "localhost" 
