@@ -9,9 +9,10 @@ def start(utils, socks):
 	listenSocket 	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	clientSocket 	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	clientAddress 	= ((UDP_IP, sendPort))
+	socks.append(clientSocket)
 	listenSocket.bind((UDP_IP, listenPort))
 
 	while True:
 		message, addr = listenSocket.recvfrom(1024)
-		CheckMessage.options[CheckMessage.check(message)](message, utils, socks)
+		CheckMessage.options[CheckMessage.check(message)](message, addr, utils, socks)
 
