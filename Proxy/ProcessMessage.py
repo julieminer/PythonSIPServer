@@ -34,8 +34,14 @@ def processCancel(msg, addr, utils, socks):
 
 def processBye(msg, addr, utils, socks):
 	print "Processing BYE"
-	# send bye to whoever
+	userAddress = lookupUser(msg, socks)
+	sendRinging(msg, userAddress, socks)
 
+def sendBye(msg, userAddress, socks):
+	print "Send bye to ", userAddress
+	clientAddress = ((userAddress, 3001))
+	socks[3].sendto(msg, clientAddress)
+	
 def sendRinging(msg, userAddress, socks):
 	print "Send ringing to ", userAddress
 	clientAddress = ((userAddress, 3001))
