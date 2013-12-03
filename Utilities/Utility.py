@@ -63,29 +63,33 @@ Content-Length: 0"
         """
         send_msg = self.parse_invite(msg)
         ssock_udp.sendto(send_msg,client_addr)
-        print "Sent message. Contents:"
+        print "Sent message to:",client_addr," Contents:"
         print send_msg
 
 
+
+
 #Test send ok message function
-"""
+'''
 #create socket to listen for INVITE
 ssock = socket(AF_INET, SOCK_DGRAM)
-ssock.bind(('localhost',5063))
+ssock.bind(('localhost',5060))
 
 #listen for message
 #print "Listening"
 msg, addr = ssock.recvfrom(2048)
 
 
-#close socket
-ssock.close()
-
+#print addr
 #Test parse method
 U = Utility()
 #print U.parse_invite(msg)
-U.send_ok_msg(msg)
-"""
+U.send_ok_msg(addr,ssock,msg)
+
+#close socket
+ssock.close()
+'''
+
 
 #Test parsing
 """

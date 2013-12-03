@@ -13,7 +13,6 @@ options = { -1 : p.processError,
 def checkInvite(msg):
 	i = msg.find("INVITE") 
 	if (i >= 0 & i < 6):
-		print "INVITE"
 		return True
 	return False
 
