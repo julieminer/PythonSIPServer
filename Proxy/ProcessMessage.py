@@ -17,9 +17,9 @@ def processInvite(msg, addr, utils, socks):
 	print "Processing INVITE"
 	#socks[0].send(msg)
 	sendTrying(msg, addr, utils, socks)
-	user = lookupUser(msg, socks)
-	if(user != "NO USER"):
-		sendInvite(user)
+	userAddress = lookupUser(msg, socks)
+	if(userAddress != "NO USER"):
+		sendInvite(msg, userAddress, socks)
 
 def processOptions(msg, addr, utils, socks):
 	print "Processing OPTION"
@@ -31,15 +31,15 @@ def processCancel(msg, addr, utils, socks):
 
 def processBye(msg, addr, utils, socks):
 	print "Processing BYE"
-	
 	# send bye to whoever
 	
 def sendTrying(msg, addr, utils, socks):
 	utils.send_ok_msg(addr, socks[3], msg)
 
-def sendInvite(user):
-	print "Send Invite"
-	#send invite to users address
+def sendInvite(msg, userAddress, socks):
+	print "Send Invite to ", userAddress
+	clientAddress = ((userAddress, 3001))
+	socks[3].sendto(msg, clientAddress)
 
 def lookupUser(msg, socks):
 	name = getToName(msg)
