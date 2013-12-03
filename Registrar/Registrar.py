@@ -3,10 +3,9 @@ import Messages
 import threading
 
 ProxyListenPort = 5061
-LocationSendPort = 5060
+LocationSendPort = 5062
 Proxy_IP = "127.0.0.1"
 Location_IP = "127.0.0.1"
-regMsg = ''
 
 class ProxyThread(threading.Thread):
     def __init__(self, ip, port, proxySock):
@@ -15,6 +14,7 @@ class ProxyThread(threading.Thread):
         self.port = port
         self.proxySock = proxySock
         print "New thread started for Proxy"
+        global regMsg
 
     def run(self):
         print "Connection from Proxy: " + self.ip
@@ -37,13 +37,14 @@ class LocationThread(threading.Thread):
         print "New thread started for location"
 
     def run(self):
-        print "Connection to Location: " + self.ip
         self.locateSock.connect((self.ip, self.port))
+        print "Connection to Location: " + self.ip
 
         while True:
             if len(regMsg) == 0:
                 continue
             else:
+                print "sending shit yo"
                 self.locateSock.send(regMsg)
                 self.locateSock.recv(1024)
                                 
