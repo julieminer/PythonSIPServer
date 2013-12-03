@@ -7,7 +7,6 @@ def processAck(msg, addr, utils, socks):
 
 def processRegister(msg, addr, utils, socks):
 	print "Processing REGISTER"
-	#forwardToRegistrar(msg)
 	socks[0].send(msg)
 
 def processInfo(msg, addr, utils, socks):
@@ -15,7 +14,6 @@ def processInfo(msg, addr, utils, socks):
 
 def processInvite(msg, addr, utils, socks):
 	print "Processing INVITE"
-	#socks[0].send(msg)
 	sendTrying(msg, addr, utils, socks)
 	userAddress = lookupUser(msg, socks)
 	if(userAddress != "NO USER"):
@@ -43,12 +41,15 @@ def sendInvite(msg, userAddress, socks):
 
 def lookupUser(msg, socks):
 	name = getToName(msg)
-	#socks[2].send("LOOKUP " + name)
-	#address = socks[2].recv(1024)
+	socks[2].send("LOOKUP " + name)
+	address = socks[2].recv(1024)
 	address = "192.168.0.1"
 	if(address == ""):
 		return "NO USER"
 	return address
+
+def processRinging(msg, addr, utils, socks):
+	print "Ringing"
 
 def getFromName(msg):
 	nameStart 	= msg.find(";tag")

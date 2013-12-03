@@ -8,11 +8,18 @@ options = { -1 : p.processError,
 			 3 : p.processInvite,
 			 4 : p.processOptions,
 			 5 : p.processCancel,
-			 6 : p.processBye}
+			 6 : p.processBye
+			 7 : p.processRinging}
 
 def checkInvite(msg):
 	i = msg.find("INVITE") 
 	if (i >= 0 & i < 6):
+		return True
+	return False
+	
+def checkRinging(msg):
+	i = msg.find("180 RINGING") 
+	if (i >= 0 & i < 12):
 		return True
 	return False
 
@@ -33,7 +40,6 @@ def checkBye(msg):
 def checkCancel(msg):
 	i = msg.find("CANCEL") 
 	if (i >= 0 and i < 5):
-		print "CANCEL"
 		return True
 	return False
 
@@ -73,5 +79,7 @@ def check(msg):
 		return 5
 	elif (checkBye(msg)):
 		return 6
+	elif (checkRinging(msg)):
+		return 7
 	else:
 		return -1
