@@ -8,7 +8,7 @@ options = { -1 : p.processError,
 			 3 : p.processInvite,
 			 4 : p.processOptions,
 			 5 : p.processCancel,
-			 6 : p.processBye
+			 6 : p.processBye,
 			 7 : p.processRinging}
 
 def checkInvite(msg):

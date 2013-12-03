@@ -2,7 +2,7 @@ import socket
 import Messages
 import threading
 
-ProxyListenPort = 3001
+ProxyListenPort = 5061
 LocationSendPort = 5060
 Proxy_IP = "127.0.0.1"
 Location_IP = "127.0.0.1"
@@ -17,10 +17,10 @@ class ProxyThread(threading.Thread):
         print "New thread started for proxy"
 
     def run(self):
-        print "Connection from: " + ip
+        print "Connection from: " + self.ip
                 
         while True:
-            recvMessage, ProxyAddr = proxySock.recv(1024)
+            recvMessage = self.proxySock.recv(2048)
             
             if(Messages.checkRegister(recvMessage) == True):
                 regMsg = Messages.parseMsg(recvMessage)
