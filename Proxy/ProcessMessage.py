@@ -64,8 +64,8 @@ def getFromName(msg):
 	return msg[nameEnd:nameStart]
 
 def getToName(msg):
-	nameStart 	= msg.find("sip: ")
-	nameEnd 	= msg.find(":")
-	name  		= msg[nameStart+5:nameEnd]
+	nameStart 	= msg.find("From: sip:")
+	nameEnd 	= msg.find("@", nameStart)
+	name  		= msg[nameStart+10:nameEnd]
 	print "getting name yo", name
 	return name
