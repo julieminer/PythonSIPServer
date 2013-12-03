@@ -12,7 +12,7 @@ RegistrarSocket.connect((regAddress, 5061))
 RedirectSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #RedirectSocket.connect((redAddress, 5062))
 LocationSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#LocationSocket.connect((locAddress, 5063))
+LocationSocket.connect((locAddress, 5062))
 
 socks = [RegistrarSocket, RedirectSocket, LocationSocket]
 

@@ -18,6 +18,11 @@ def processInvite(msg, addr, utils, socks):
 	userAddress = lookupUser(msg, socks)
 	if(userAddress != "NO USER"):
 		sendInvite(msg, userAddress, socks)
+		
+def processRinging(msg, addr, utils, socks):
+	print "Processing RINGING"
+	userAddress = lookupUser(msg, socks)
+	sendRinging(msg, userAddress, socks)
 
 def processOptions(msg, addr, utils, socks):
 	print "Processing OPTION"
@@ -30,6 +35,11 @@ def processCancel(msg, addr, utils, socks):
 def processBye(msg, addr, utils, socks):
 	print "Processing BYE"
 	# send bye to whoever
+
+def sendRinging(msg, userAddress, socks):
+	print "Send ringing to ", userAddress
+	clientAddress = ((userAddress, 3001))
+	socks[3].sendto(msg, clientAddress)
 	
 def sendTrying(msg, addr, utils, socks):
 	utils.send_ok_msg(addr, socks[3], msg)
@@ -41,15 +51,12 @@ def sendInvite(msg, userAddress, socks):
 
 def lookupUser(msg, socks):
 	name = getToName(msg)
+	print name
 	socks[2].send("LOOKUP " + name)
 	address = socks[2].recv(1024)
-	address = "192.168.0.1"
 	if(address == ""):
 		return "NO USER"
 	return address
-
-def processRinging(msg, addr, utils, socks):
-	print "Ringing"
 
 def getFromName(msg):
 	nameStart 	= msg.find(";tag")
@@ -57,7 +64,8 @@ def getFromName(msg):
 	return msg[nameEnd:nameStart]
 
 def getToName(msg):
-	nameStart 	= msg.find("From: ")
-	nameEnd 	= msg.find("To: ")
-	name  		= msg[nameEnd:nameStart]
+	nameStart 	= msg.find("sip: ")
+	nameEnd 	= msg.find(":")
+	name  		= msg[nameStart+5:nameEnd]
+	print "getting name yo", name
 	return name
