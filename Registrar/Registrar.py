@@ -6,6 +6,7 @@ ProxyListenPort = 5061
 LocationSendPort = 5062
 Proxy_IP = "127.0.0.1"
 Location_IP = "127.0.0.1"
+regMsg = ''
 
 class ProxyThread(threading.Thread):
     def __init__(self, ip, port, proxySock):
@@ -14,7 +15,6 @@ class ProxyThread(threading.Thread):
         self.port = port
         self.proxySock = proxySock
         print "New thread started for Proxy"
-        global regMsg
 
     def run(self):
         print "Connection from Proxy: " + self.ip
@@ -41,16 +41,16 @@ class LocationThread(threading.Thread):
         print "Connection to Location: " + self.ip
 
         while True:
-            if len(regMsg) == 0:
-                continue
-            else:
-                print "sending shit yo"
-                self.locateSock.send(regMsg)
-                self.locateSock.recv(1024)
-                                
+            print "Sending..."
+            if (len(regMsg) != 0):
+                self.locateSock.send("Hi")
+                print "Sent hi"
+            print "Not sending"
 
 if __name__ == '__main__':
     #Create listen for proxy socket, wait for connection and process thread
+
+    
     proxySock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     proxySock.bind((Proxy_IP,ProxyListenPort))
     proxySock.listen(1)
@@ -58,7 +58,6 @@ if __name__ == '__main__':
     (pSock, (Proxy_IP, ProxyListenPort)) = proxySock.accept()
 
     proxyThread = ProxyThread(Proxy_IP, ProxyListenPort, pSock)
-    locationThread = LocationThread()
     
     proxyThread.start()
     locationThread.start()
