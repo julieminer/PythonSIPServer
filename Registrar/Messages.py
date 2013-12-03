@@ -9,7 +9,6 @@ def parseMsg(msg):
     firstIndex = msg.find("To: <sip:")
     lastIndex = msg.find(">", firstIndex)
     sipAddr = msg[firstIndex + 9:lastIndex]
-    print sipAddr
     return sipAddr
 
 def OKMessage():
