@@ -51,13 +51,11 @@ def sendTrying(msg, addr, utils, socks):
 	utils.send_ok_msg(addr, socks[3], msg)
 
 def sendInvite(msg, userAddress, socks):
-	print "Send Invite to ", userAddress
 	clientAddress = ((userAddress, 3001))
 	socks[3].sendto(msg, clientAddress)
 
 def lookupUser(msg, socks):
 	name = getToName(msg)
-	print name
 	socks[2].send("LOOKUP " + name)
 	address = socks[2].recv(1024)
 	if(address == ""):
@@ -73,5 +71,4 @@ def getToName(msg):
 	nameStart 	= msg.find("From: sip:")
 	nameEnd 	= msg.find("@", nameStart)
 	name  		= msg[nameStart+10:nameEnd]
-	print "getting name yo", name
 	return name
