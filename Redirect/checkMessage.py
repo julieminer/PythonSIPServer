@@ -1,4 +1,5 @@
 #include Messages
+ import Messages
 
 # All If statments are placeholders until I figure out what to put in them
 def check(msg):
