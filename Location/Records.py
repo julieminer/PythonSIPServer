@@ -41,8 +41,7 @@ def parsePacket(data):
    
     if ( type == 'REGISTER' ):
         print ("registering")
-        sipId = stuff[1]
-        ip = stuff[2]
+        sipId, ip = stuff[1].split("@")
         rtn = loc.save( sipId, ip)
     if (type == 'LOOKUP'):
         print ("lookingup")
