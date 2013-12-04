@@ -53,6 +53,5 @@ if __name__ == '__main__':
     print ("Server loop running in thread:", server_thread.name)
 
 
-    while True:
-        pass
+    input('press enter to exit')
 

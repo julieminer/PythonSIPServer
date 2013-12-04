@@ -11,5 +11,4 @@ if __name__ == "__main__":
         Network.client(ip, port, "REGISTER World2@2.2.3.4")
         Network.client(ip, port, "REGISTER World@1.2.3.4")
         Network.client(ip, port, "LOOKUP World")
-while True:
-    pass
+        input("Press enter to exit")
