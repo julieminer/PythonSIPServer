@@ -1,7 +1,7 @@
 import socket
 
 def processError(msg, addr, utils, socks):
-	print "Processing Error"
+	print "Error"
 	# ignore errors
 
 def processAck(msg, addr, utils, socks):
@@ -25,7 +25,7 @@ def processInfo(msg, addr, utils, socks):
 	print "Processing INFO"
 
 def processInvite(msg, addr, utils, socks):
-	#print "Processing INVITE"
+	print "Processing INVITE"
 	sendTrying(msg, addr, utils, socks)
 	userAddress = lookupUser(msg, socks, 0)
 	if(userAddress != "NO USER"):
@@ -37,7 +37,7 @@ def processRinging(msg, addr, utils, socks):
 	sendRinging(msg, userAddress, socks)
 
 def processOptions(msg, addr, utils, socks):
-	print "opt"
+	print "Options"
 	# don't do this
 	
 def processCancel(msg, addr, utils, socks):
@@ -46,10 +46,11 @@ def processCancel(msg, addr, utils, socks):
 
 def processBye(msg, addr, utils, socks):
 	print "Processing BYE"
-	userAddress = lookupUser(msg, socks)
+	userAddress = lookupUser(msg, socks, 0)
 	sendBye(msg, userAddress, socks)
 
 def sendBye(msg, userAddress, socks):
+	print "Bye!"
 	clientAddress = (userAddress, 5060)
 	socks[3].sendto(msg, clientAddress)
 	
@@ -94,7 +95,6 @@ def getFromName(msg):
 	return msg[nameStart+11:nameEnd]
 
 def getToName(msg):
-	#print msg
 	nameStart 	= msg.find("To: <sip:")
 	nameEnd 	= msg.find("@", nameStart)
 	name  		= msg[nameStart+9:nameEnd]
