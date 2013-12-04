@@ -48,29 +48,31 @@ def processBye(msg, addr, utils, socks):
 
 def sendBye(msg, userAddress, socks):
 	print "Send bye to ", userAddress
-	clientAddress = ((userAddress, 3001))
+	clientAddress = (userAddress, 5060)
+	print clientAddress
 	socks[3].sendto(msg, clientAddress)
 	
 def sendACK(msg, userAddress, socks):
 	print "Send ACK to ", userAddress
-	clientAddress = ((userAddress, 3001))
+	clientAddress = (userAddress, 5060)
 	socks[3].sendto(msg, clientAddress)
 	
 def sendOK(msg, userAddress, socks):
 	print "Send OK to ", userAddress
-	clientAddress = ((userAddress, 3001))
+	clientAddress = (userAddress, 5060)
 	socks[3].sendto(msg, clientAddress)
 	
 def sendRinging(msg, userAddress, socks):
 	print "Send ringing to ", userAddress
-	clientAddress = ((userAddress, 3001))
+	clientAddress = (userAddress, 5060)
 	socks[3].sendto(msg, clientAddress)
 	
 def sendTrying(msg, addr, utils, socks):
 	utils.send_ok_msg(addr, socks[3], msg)
 
 def sendInvite(msg, userAddress, socks):
-	clientAddress = ((userAddress, 3001))
+	clientAddress = (userAddress, 5060)
+	print clientAddress
 	socks[3].sendto(msg, clientAddress)
 
 def lookupUser(msg, socks):
