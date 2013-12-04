@@ -2,91 +2,90 @@ import ProcessMessage
 p = ProcessMessage
 
 options = { -1 : p.processError,
-			 0 : p.processAck,
-			 1 : p.processRegister,
-			 2 : p.processInfo,
-			 3 : p.processInvite,
-			 4 : p.processOptions,
-			 5 : p.processCancel,
-			 6 : p.processBye,
-			 7 : p.processRinging,
-			 8 : p.processOK}
+			 4 : p.processAck,
+			 8 : p.processRegister,
+			 5 : p.processInfo,
+			 0 : p.processInvite,
+			 6 : p.processOptions,
+			 7 : p.processCancel,
+			 2 : p.processBye,
+			 1 : p.processRinging,
+			 3 : p.processOK}
 
 def checkInvite(msg):
 	i = msg.find("INVITE") 
-	if (i >= 0 & i < 6):
+	if (i == 0):
 		return True
 	return False
 	
 def checkRinging(msg):
-	i = msg.find("180 RINGING") 
-	if (i >= 0 & i < 12):
+	i = msg.find("180 Ringing")
+	if (i >= 0):
 		return True
 	return False
 
 def checkAck(msg):
 	i = msg.find("ACK") 
-	if (i >= 0 and i < 3):
-		print "ACK"
+	if (i == 0):
 		return True
 	return False
 
 def checkBye(msg):
 	i = msg.find("BYE") 
-	if (i >= 0 and i < 3):
-		print "BYE"
+	if (i == 0):
 		return True
 	return False
 
 def checkCancel(msg):
 	i = msg.find("CANCEL") 
-	if (i >= 0 and i < 5):
+	if (i == 0):
 		return True
 	return False
 
 def checkOptions(msg):
 	i = msg.find("OPTIONS") 
-	if (i >= 0 and i < 7):
+	if (i == 0):
 		return True
 	return False
 
 def checkRegister(msg):
 	i = msg.find("REGISTER") 
-	if (i >= 0 and i < 8):
+	if (i == 0):
 		return True
 	return False
 	
 def checkOK(msg):
 	i = msg.find("200 OK") 
-	if (i >= 0 and i < 7):
+	if (i >= 0):
 		return True
 	return False
 
 def checkInfo(msg):
 	i = msg.find("INFO") 
-	if (i >= 0 and i < 4):
+	if (i ==0):
 		print "INFO"
 		return True
 	return False
-
+	
 def check(msg):
-	if checkAck(msg):
+	i = -1
+	
+	if checkInvite(msg):
 		return 0
-	elif (checkRegister(msg)):
+	if (checkRinging(msg)):
 		return 1
-	elif (checkInfo(msg)):
+	if (checkBye(msg)):
 		return 2
-	elif (checkInvite(msg)):
+	if (checkOK(msg)):
 		return 3
-	elif (checkOptions(msg)):
+	if (checkAck(msg)):
 		return 4
-	elif (checkCancel(msg)):
+	if (checkInfo(msg)):
 		return 5
-	elif (checkBye(msg)):
+	if (checkOptions(msg)):
 		return 6
-	elif (checkRinging(msg)):
+	if (checkCancel(msg)):
 		return 7
-	elif (checkOK(msg)):
+	if (checkRegister(msg)):
 		return 8
-	else:
-		return -1
+	return -1
