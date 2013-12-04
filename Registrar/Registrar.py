@@ -1,27 +1,22 @@
 import socket
 import Messages
 import threading
+import SocketServer
 
 ProxyListenPort = 5061
 LocationSendPort = 5062
 Proxy_IP = "127.0.0.1"
 Location_IP = "127.0.0.1"
 
-class ProxyThread(threading.Thread):
-    def __init__(self, proxy_ip, proxy_port, proxySock):
-        threading.Thread.__init__(self)
+class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
+   
+
+    def handle(self):
+        print "Connection from Proxy: " #+ self.proxy_ip
         self.location_ip = Location_IP
         self.location_port = LocationSendPort
-        self.location_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.proxy_ip = proxy_ip
-        self.proxy_port = proxy_port
-        self.proxy_sock = proxySock
-        print "New thread started for Proxy"
-
-    def run(self):
-        print "Connection from Proxy: " + self.proxy_ip
-                
-        recvMessage = self.proxy_sock.recv(1024)
+        self.location_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)        
+        recvMessage = self.request.recv(1024)
             
         if(Messages.checkRegister(recvMessage) == True):
             regMsg = Messages.parseMsg(recvMessage)
@@ -37,21 +32,27 @@ class ProxyThread(threading.Thread):
 
             self.location_sock.close()
             print "Close Connection with location"
-            self.proxy_sock.send("OK")
+            self.request.send("OK")
             print "Send OK to proxy"
-
+        
+            
+class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+    pass
 if __name__ == '__main__':
     #Create listen for proxy socket, wait for connection and process thread
+    HOST, PORT = "localhost", ProxyListenPort
+    server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
+    ip, port = server.server_address
+    print ip
+    # Start a thread with the server -- that thread will then start one
+    # more thread for each request
+    server_thread = threading.Thread(target=server.serve_forever)
+    # Exit the server thread when the main thread terminates
+    server_thread.daemon = True
+    server_thread.start()
+    print ("Server loop running in thread:", server_thread.name)
+
 
     while True:
-        #Create socket and connect to Proxy Server
-        proxySock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        proxySock.bind((Proxy_IP,ProxyListenPort))
-        proxySock.listen(1)
-        (pSock, (Proxy_IP, ProxyListenPort)) = proxySock.accept()
-        proxyThread = ProxyThread(Proxy_IP, ProxyListenPort, pSock)    
-        proxyThread.start()
-        proxySock.close()
-        
-    
+        pass
 
