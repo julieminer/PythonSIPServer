@@ -16,10 +16,14 @@ def processOK(msg, addr, utils, socks):
 	
 def processRegister(msg, addr, utils, socks):
 	print "Processing REGISTER"
+	sendTrying(msg, addr, utils, socks)
 	socks[0] = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	socks[0].connect(("localhost", 5061))
 	socks[0].send(msg)
+	rtn = socks[0].recv(1024)
+	print ("got response: ", rtn)
 	socks[0].close()
+	sendACK(rtn, addr, socks)
 
 def processInfo(msg, addr, utils, socks):
 	print "Processing INFO"
@@ -55,8 +59,8 @@ def sendBye(msg, userAddress, socks):
 	socks[3].sendto(msg, clientAddress)
 	
 def sendACK(msg, userAddress, socks):
-	clientAddress = (userAddress, 5060)
-	socks[3].sendto(msg, clientAddress)
+	#clientAddress = (userAddress, 5060)
+	socks[3].sendto(msg, userAddress)
 	
 def sendOK(msg, userAddress, socks):
 	print "Send OK to ", userAddress

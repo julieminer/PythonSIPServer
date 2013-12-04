@@ -32,7 +32,7 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
 
             self.location_sock.close()
             print "Close Connection with location"
-            self.request.send("OK")
+            self.request.send("200 OK")
             print "Send OK to proxy"
         
             

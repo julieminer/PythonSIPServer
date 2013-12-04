@@ -19,7 +19,22 @@ To: "+to+"\n\
 From: "+fr+"\n\
 Call-ID: "+call_id+"\n\
 CSeq: "+cseq+"\n\
-Content-Length: 0"
+Content-Length: 0\r\n\r\n"
+        return msg
+    def get_200_ok(self, srv, to, fr, call_id, cseq):
+        """Send 200 OK.
+
+        This message is sent when the server receives an INVITE
+        """
+        
+        msg = "\
+SIP/2.0 200 OK\n\
+Via: SIP/2.0/UDP "+srv+";received=192.0.2.1\n\
+To: "+to+"\n\
+From: "+fr+"\n\
+Call-ID: "+call_id+"\n\
+CSeq: "+cseq+"\n\
+Content-Length: 0\r\n\r\n"
         return msg
 
     def parse_invite(self, msg):

@@ -5,7 +5,7 @@ def start(utils, socks):
 	print "server start"
 	listenPort 		= 5060
 	sendPort		= 5060
-	UDP_IP 			= "192.168.0.2"
+	UDP_IP 			= "localhost"
 	listenSocket 	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	clientSocket 	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	clientAddress 	= (UDP_IP, sendPort)

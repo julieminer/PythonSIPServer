@@ -20,7 +20,7 @@ class location:
     def save(self, sipId, ip):
         self.users[sipId]  = User(sipId, ip)
         print ('ok')
-        return "ok"
+        return "200 OK"
     def fetch(self, sipId):
         return self.users[sipId].getIp()
         
