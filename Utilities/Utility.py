@@ -63,8 +63,8 @@ Content-Length: 0"
         """
         send_msg = self.parse_invite(msg)
         ssock_udp.sendto(send_msg,client_addr)
-        print "Sent message to:",client_addr," Contents:"
-        print send_msg
+        #print "Sent message to:",client_addr," Contents:"
+        #print send_msg
 
 
 

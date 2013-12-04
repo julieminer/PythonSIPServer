@@ -1,10 +1,19 @@
+import socket
+
 def processError(msg, addr, utils, socks):
 	print "Processing Error"
 	# ignore errors
 
 def processAck(msg, addr, utils, socks):
 	print "Processing ACK"
+	userAddress = lookupUser(msg, socks)
+	sendACK(msg, userAddress, socks)
 
+def processOK(msg, addr, utils, socks):
+	print "Processing 200 OK"
+	userAddress = lookupUser(msg, socks)
+	sendOK(msg, userAddress, socks)
+	
 def processRegister(msg, addr, utils, socks):
 	print "Processing REGISTER"
 	socks[0].send(msg)
@@ -42,6 +51,16 @@ def sendBye(msg, userAddress, socks):
 	clientAddress = ((userAddress, 3001))
 	socks[3].sendto(msg, clientAddress)
 	
+def sendACK(msg, userAddress, socks):
+	print "Send ACK to ", userAddress
+	clientAddress = ((userAddress, 3001))
+	socks[3].sendto(msg, clientAddress)
+	
+def sendOK(msg, userAddress, socks):
+	print "Send OK to ", userAddress
+	clientAddress = ((userAddress, 3001))
+	socks[3].sendto(msg, clientAddress)
+	
 def sendRinging(msg, userAddress, socks):
 	print "Send ringing to ", userAddress
 	clientAddress = ((userAddress, 3001))
@@ -56,8 +75,11 @@ def sendInvite(msg, userAddress, socks):
 
 def lookupUser(msg, socks):
 	name = getToName(msg)
+	socks[2] = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	socks[2].connect(("localhost", 5062))
 	socks[2].send("LOOKUP " + name)
 	address = socks[2].recv(1024)
+	socks[2].close()
 	if(address == ""):
 		return "NO USER"
 	return address
@@ -68,7 +90,8 @@ def getFromName(msg):
 	return msg[nameEnd:nameStart]
 
 def getToName(msg):
-	nameStart 	= msg.find("From: sip:")
+	#print msg
+	nameStart 	= msg.find("To: <sip:")
 	nameEnd 	= msg.find("@", nameStart)
-	name  		= msg[nameStart+10:nameEnd]
+	name  		= msg[nameStart+9:nameEnd]
 	return name

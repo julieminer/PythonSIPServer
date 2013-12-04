@@ -7,6 +7,7 @@ if __name__ == "__main__":
     testing = 1
     if( testing ):
         Network.client(ip, port, "REGISTER World 1.2.3.4")
+        Network.client(ip, port, "REGISTER bob 192.168.0.1")
         Network.client(ip, port, "REGISTER World2 2.2.3.4")
         Network.client(ip, port, "LOOKUP World")
 while True:
