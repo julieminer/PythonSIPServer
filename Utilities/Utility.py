@@ -66,9 +66,46 @@ Content-Length: 0"
         #print "Sent message to:",client_addr," Contents:"
         #print send_msg
 
+    def parse_register(self,msg):
+        """Generate 100 OK message from an INVITE message.
+
+        """
+        """
+        msg = "REGISTER sip:142.232.253.225 SIP/2.0\n\
+Via: SIP/2.0/UDP 142.232.253.220:5060;rport;branch=z9hG4bK30813\n\
+From: <sip:jeremy@142.232.253.225>;tag=5003\n\
+To: <sip:jeremy@142.232.253.225>\n\
+Call-ID: 6448\n\
+CSeq: 6 REGISTER\n\
+Contact: <sip:jeremy@142.232.253.220;line=3d3c2d5799b9597>\n\
+Max-Forwards: 70\n\
+User-Agent: Linphone/3.6.1 (eXosip2/3.6.0)\n\
+Expires: 3600\n\
+Content-Length: 0"
+        """
+        
+        #Extract REGISTER line
+        eol_1 = msg.find("\n")
+        msg1 = msg[:eol_1+1]
+        msg2 = msg.replace(msg1,"")
+
+        #Extract Max-Forwards line
+        eol_2 = msg.find("Max-Forwards:")
+        eol_3 = msg.find("User-Agent")
+        msg3 = msg[eol_2:eol_3]
+        msg4 = msg2.replace(msg3,"")
+
+        #Add 200 OK to beginning
+        msg5 = "SIP/2.0 200 OK\n" + msg4
+        print msg5
 
 
 
+"""
+#Test parse_register
+U = Utility()
+U.parse_register()
+"""
 #Test send ok message function
 '''
 #create socket to listen for INVITE
