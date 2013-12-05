@@ -23,7 +23,8 @@ def processRegister(msg, addr, utils, socks):
 	rtn = socks[0].recv(1024)
 	print ("got response: ", rtn)
 	socks[0].close()
-	sendACK(rtn, addr, socks)
+	msg2 = utils.parse_register(msg)
+	sendOK(msg2, addr, socks)
 
 def processInfo(msg, addr, utils, socks):
 	print "Processing INFO"
@@ -59,13 +60,13 @@ def sendBye(msg, userAddress, socks):
 	socks[3].sendto(msg, clientAddress)
 	
 def sendACK(msg, userAddress, socks):
-	#clientAddress = (userAddress, 5060)
+	clientAddress = (userAddress, 5060)
 	socks[3].sendto(msg, userAddress)
 	
 def sendOK(msg, userAddress, socks):
 	print "Send OK to ", userAddress
-	clientAddress = (userAddress, 5060)
-	socks[3].sendto(msg, clientAddress)
+	#clientAddress = (userAddress, 5060)
+	socks[3].sendto(msg, userAddress)
 	
 def sendRinging(msg, userAddress, socks):
 	print "Send ringing to ", userAddress
