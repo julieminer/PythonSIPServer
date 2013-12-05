@@ -6,7 +6,7 @@ def processError(msg, addr, utils, socks):
 
 def processAck(msg, addr, utils, socks):
 	print "Processing ACK"
-	userAddress = lookupUser(msg, socks)
+	userAddress = lookupUser(msg, socks, 0)
 	sendACK(msg, userAddress, socks)
 
 def processOK(msg, addr, utils, socks):
@@ -30,6 +30,10 @@ def processInvite(msg, addr, utils, socks):
 	userAddress = lookupUser(msg, socks, 0)
 	if(userAddress != "NO USER"):
 		sendInvite(msg, userAddress, socks)
+		
+def processBusy(msg, addr, utils, socks):
+	userAddress = lookupUser(msg, socks, 1)
+	sendBusy(msg, userAddress, socks)
 		
 def processRinging(msg, addr, utils, socks):
 	print "Processing RINGING"
@@ -72,6 +76,11 @@ def sendTrying(msg, addr, utils, socks):
 	utils.send_ok_msg(addr, socks[3], msg)
 
 def sendInvite(msg, userAddress, socks):
+	clientAddress = (userAddress, 5060)
+	socks[3].sendto(msg, clientAddress)
+	
+def sendBusy(msg, userAddress, socks):
+	print "Sending BUSY"
 	clientAddress = (userAddress, 5060)
 	socks[3].sendto(msg, clientAddress)
 

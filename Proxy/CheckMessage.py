@@ -10,7 +10,8 @@ options = { -1 : p.processError,
 			 7 : p.processCancel,
 			 2 : p.processBye,
 			 1 : p.processRinging,
-			 3 : p.processOK}
+			 3 : p.processOK,
+			 9 : p.processBusy}
 
 def checkInvite(msg):
 	i = msg.find("INVITE") 
@@ -67,6 +68,12 @@ def checkInfo(msg):
 		return True
 	return False
 	
+def checkBusy(msg):
+	i = msg.find("603 Decline") 
+	if (i >= 0):
+		return True
+	return False
+	
 def check(msg):
 	i = -1
 	
@@ -88,4 +95,6 @@ def check(msg):
 		return 7
 	if (checkRegister(msg)):
 		return 8
+	if (checkBusy(msg)):
+		return 9
 	return -1
