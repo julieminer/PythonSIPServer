@@ -97,7 +97,7 @@ Content-Length: 0"
 
         #Add 200 OK to beginning
         msg5 = "SIP/2.0 200 OK\n" + msg4
-        print msg5
+        return msg5
 
 
 
